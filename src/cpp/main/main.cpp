@@ -1,4 +1,6 @@
 #include "gas\Command.hpp"
+#include "gas\Drawable.hpp"
+#include "gas\State.hpp"
 
 #include <iostream>
 #include <vector>
@@ -10,24 +12,7 @@
 
 // @todo: #2 move all classes to separated moduile's
 
-struct Drawable{
-    virtual ~Drawable() = 0;
-    virtual void draw() = 0;
-};
-
 using Commands = std::vector<std::shared_ptr<Command>>;
-
-class State: public Drawable{
-protected:
-    int mId;
-    std::string mText;
-    State(int id, const std::string& text): mId(id), mText(text){}
-public:
-    virtual char status() = 0;
-    virtual void draw() override{
-        std::cout << "[" << status() << "] #" << mId << " " << mText << std::endl;
-    }
-};
 
 class DoneState: public State{
 public:
@@ -83,13 +68,6 @@ public:
     void load(const char* filename);
     void save(const char* filename);
 };
-
-
-class IndexCommand: public Command{
-
-};
-
-Drawable::~Drawable(){}
 
 Task::Task(const int id, const char* text, State* state): 
     mId(id), mText(text), mState(state)
