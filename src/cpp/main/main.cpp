@@ -2,6 +2,8 @@
 #include "gas\Drawable.hpp"
 #include "gas\State.hpp"
 #include "gas\states\DoneState.hpp"
+#include "gas\states\DelayedState.hpp"
+#include "gas\states\NewState.hpp"
 
 #include <iostream>
 #include <vector>
@@ -14,18 +16,6 @@
 // @todo: #2 move all classes to separated moduile's
 
 using Commands = std::vector<std::shared_ptr<Command>>;
-
-class NewState: public State{
-public:    
-    NewState(int id, const std::string& text): State(id, text){}
-    char status() override {return ' ';}    
-};
-
-class DelayedState: public State{
-public:    
-    DelayedState(int id, const std::string& text): State(id, text){}
-    char status() override {return '-';}    
-};
 
 class Task: public Drawable{
     int mId;
