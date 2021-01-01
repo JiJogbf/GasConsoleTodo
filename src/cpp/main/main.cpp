@@ -1,9 +1,9 @@
 #include "gas\Command.hpp"
 #include "gas\Drawable.hpp"
 #include "gas\State.hpp"
-#include "gas\states\DoneState.hpp"
-#include "gas\states\DelayedState.hpp"
 #include "gas\states\NewState.hpp"
+#include "gas\Task.hpp"
+
 
 #include <iostream>
 #include <fstream>
@@ -14,26 +14,7 @@
 
 // @todo: #2 move all classes to separated moduile's
 
-class Task: public Drawable{
-    int mId;
-    std::string mText;
-    State* mState;
-    void changeState(State* state);
-public:
-    Task(const int id, const char* text, State* state);
-    ~Task() override;
-    int id()const{ return mId; }
-    void draw() override;   
-    void done();
-    void renew();
-    void delay();
-    void load(std::ifstream& stream);
-    void save(std::ofstream& stream);
-};
-
-
 using TaskList_Map = std::map<int, std::shared_ptr<Task>>;
-
 
 class TaskList: public Drawable{
     TaskList_Map mItems;
@@ -50,70 +31,6 @@ public:
     void load(const char* filename);
     void save(const char* filename);
 };
-
-Task::Task(const int id, const char* text, State* state): 
-    mId(id), mText(text), mState(state)
-{}
-
-Task::~Task(){
-    delete mState;
-}
-
-void Task::draw(){
-    mState->draw();
-}
-
-void Task::changeState(State* state){
-    // @todo #1 create functions for simple nullptr checking and comparing pointers
-    if((mState != state) && (state != nullptr)){
-        delete mState;
-        mState = state;
-    }
-}
-
-void Task::done(){
-    changeState(new DoneState(mId, mText));
-}
-
-void Task::renew(){
-    changeState(new NewState(mId, mText));
-}
-
-void Task::delay(){
-    changeState(new DelayedState(mId, mText));
-}
-
-
-void Task::load(std::ifstream& stream){
-    std::string buffer = "";
-    std::getline(stream, buffer);
-    int idPos = buffer.find("#") + 1;
-
-    mId = 0;
-    mText = "";
-
-    std::stringstream ss(buffer);
-    ss.seekg(idPos);
-    ss >> mId;
-
-    int pos = ss.tellg();
-    mText = buffer.substr(pos + 1);  
-    switch(buffer[1]){
-        case 'x':
-            done();
-            break;
-        case '-':
-            delay();
-            break;
-        case ' ':
-            renew();
-            break;
-    }
-}
-
-void Task::save(std::ofstream& stream){
-    stream << "[" << mState->status() << "] #" << mId << " " << mText << std::endl;
-}
 
 TaskList::TaskList(const char* name):
     mItems(), mName(name), mLastId(0)
