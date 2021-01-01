@@ -1,0 +1,2 @@
+[ ] #1 create functions for simple nullptr checking and comparing pointers.
+[ ] #2 move all classes to separated moduile's.

@@ -8,3 +8,4 @@ bin
 Makefile
 CMakeCache.txt
 CMakeFiles
+test
