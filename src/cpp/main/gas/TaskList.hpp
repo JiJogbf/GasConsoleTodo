@@ -1,29 +1,14 @@
-#pragma once
+#pragma once 
 
 #include "Drawable.hpp"
 
-#include <map>
-#include <string>
-#include <memory>
-
-class Task;
-
-using TaskList_Map = std::map<int, std::shared_ptr<Task>>;
-
 class TaskList: public Drawable{
-    TaskList_Map mItems;
-    std::string mName;
-    int mLastId;
 public:
-    TaskList(const char* name);
-    ~TaskList();
-    void draw() override;
-    int newTask(const char* text);
-    void done(int id);
-    void renew(int id);
-    void delay(int id);
+    virtual int newTask(const char* text) = 0;
+    virtual void done(int id) = 0;
+    virtual void renew(int id) = 0;
+    virtual void delay(int id) = 0;
     // @todo: #5 adding fileexistance checking 
-    void load(const char* filename);
-    void save(const char* filename);
+    virtual void load(const char* filename) = 0;
+    virtual void save(const char* filename) = 0;
 };
-
