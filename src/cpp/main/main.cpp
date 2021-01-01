@@ -1,6 +1,7 @@
 #include "gas\Command.hpp"
 #include "gas\Drawable.hpp"
 #include "gas\State.hpp"
+#include "gas\states\DoneState.hpp"
 
 #include <iostream>
 #include <vector>
@@ -13,12 +14,6 @@
 // @todo: #2 move all classes to separated moduile's
 
 using Commands = std::vector<std::shared_ptr<Command>>;
-
-class DoneState: public State{
-public:
-    DoneState(int id, const std::string& text): State(id, text){}
-    char status() override {return 'x';}
-};
 
 class NewState: public State{
 public:    
