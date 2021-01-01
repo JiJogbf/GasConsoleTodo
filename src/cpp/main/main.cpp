@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -11,6 +12,13 @@ struct Drawable{
     virtual ~Drawable() = 0;
     virtual void draw() = 0;
 };
+
+struct Command{
+    virtual ~Command() = 0;
+    virtual void execute() = 0;
+};
+
+using Commands = std::vector<std::shared_ptr<Command>>;
 
 class State: public Drawable{
 protected:
@@ -80,7 +88,14 @@ public:
 };
 
 
+class IndexCommand: public Command{
+
+};
+
 Drawable::~Drawable(){}
+
+
+Command::~Command(){}
 
 
 Task::Task(const int id, const char* text, State* state): 
@@ -193,12 +208,18 @@ void TaskList::load(const char* filename){
     std::ifstream stream(filename);
     while(!stream.eof()){
         int id = mLastId++;
-        Task* t = new Task(id,"", new NewState(id, ""));
+        Task* t = new Task(id, "", new NewState(id, ""));
         t->load(stream);
-        if(id < t->id()){
-            mLastId = t->id();
+        int loadedid = t->id();
+        if(id < loadedid){
+            mLastId = loadedid;
         }
-        mItems[id] = std::shared_ptr<Task>(t);
+        
+        if(loadedid > 0){
+            mItems[loadedid] = std::shared_ptr<Task>(t);
+        }else{
+            delete t;
+        }
     }
     stream.close();
 }
@@ -213,11 +234,42 @@ void TaskList::save(const char* filename){
 
 
 int main(int argc, char** argv){
-    TaskList list("empty_list");
-    std::cout << "Console Todo app" << std::endl;
-    list.load("test/todo.txt");
-    int id = list.newTask("testing some shit");
-    list.done(id);
-    list.save("test/new_todo.txt");
+    if(argc > 1){
+        std::string action = argv[1];
+        if(argc > 2){
+            std::string param = argv[2];
+            TaskList list("todo_list");
+            list.load("todo.txt");
+            
+            if(action == "new"){
+                list.newTask(param.c_str());
+            }else if(action == "done"){
+                int id = std::stoi(param);
+                list.done(id);
+            }else if(action == "renew"){
+                int id = std::stoi(param);
+                list.renew(id);
+            }else if(action == "delay"){
+                int id = std::stoi(param);
+                list.delay(id);            
+            }else{
+                std::cout << "unrecognized action: '" << action << "'" << std::endl;
+            }
+            list.save("todo.txt");            
+        }else{
+            std::cout << "Not enough params" << std::endl 
+                << "usage: todo <action> [parameter]" << std::endl    
+                << "commands: " << std::endl
+                << "new" << std::endl
+                << "done" << std::endl;
+        }
+    }else{
+        std::cout 
+            << "No action passed" << std::endl 
+            << "usage: todo <action> [parameter]" << std::endl    
+            << "commands: " << std::endl
+            << "new" << std::endl
+            << "done" << std::endl;
+    }
     return 0;
 }
