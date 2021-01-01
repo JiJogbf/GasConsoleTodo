@@ -7,6 +7,8 @@ static bool fileExists(const char* filename){
     return stream.good();
 }
 
+SafeTaskList::SafeTaskList(TaskList* list): TaskListDecorator(list){}
+
 void SafeTaskList::load(const char* filename){
     if(fileExists(filename)){
         TaskListDecorator::load(filename);

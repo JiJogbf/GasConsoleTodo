@@ -14,6 +14,10 @@ void TaskListDecorator::done(int id){
     mOrigin->done(id);
 }
 
+void TaskListDecorator::draw(){
+    mOrigin->draw();
+}
+
 void TaskListDecorator::renew(int id){
     mOrigin->renew(id);
 }

@@ -1,5 +1,6 @@
 #include "gas\TaskList.hpp"
 #include "gas\DefaultTaskList.hpp"
+#include "gas\SafeTaskList.hpp"
 
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@ int main(int argc, char** argv){
         if(argc > 2){
             std::string param = argv[2];
             // @todo: #4 load/write for list name at top of file todo.txt
-            TaskList* list = new DefaultTaskList("todo_list");
+            TaskList* list = new SafeTaskList(new DefaultTaskList("todo-list"));  
             list->load("todo.txt");
             if(action == "new"){
                 list->newTask(param.c_str());
