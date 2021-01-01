@@ -3,13 +3,12 @@
 #include <iostream>
 #include <string>
 
-// @todo: #2 move all classes to separated moduile's
-
 int main(int argc, char** argv){
     if(argc > 1){
         std::string action = argv[1];
         if(argc > 2){
             std::string param = argv[2];
+            // @todo: #4 load/write for list name at top of file todo.txt
             TaskList list("todo_list");
             list.load("todo.txt");
             
@@ -36,8 +35,7 @@ int main(int argc, char** argv){
                 << "done" << std::endl;
         }
     }else{
-        std::cout 
-            << "No action passed" << std::endl 
+        std::cout << "No action passed" << std::endl 
             << "usage: todo <action> [parameter]" << std::endl    
             << "commands: " << std::endl
             << "new" << std::endl
