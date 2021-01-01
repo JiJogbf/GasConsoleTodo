@@ -1,0 +1,10 @@
+*.exe
+*.o
+*.a
+*.lib
+*.dll
+bin
+*.cmake
+Makefile
+CMakeCache.txt
+CMakeFiles
