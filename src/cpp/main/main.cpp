@@ -1,3 +1,5 @@
+#include "gas\Command.hpp"
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -11,11 +13,6 @@
 struct Drawable{
     virtual ~Drawable() = 0;
     virtual void draw() = 0;
-};
-
-struct Command{
-    virtual ~Command() = 0;
-    virtual void execute() = 0;
 };
 
 using Commands = std::vector<std::shared_ptr<Command>>;
@@ -93,10 +90,6 @@ class IndexCommand: public Command{
 };
 
 Drawable::~Drawable(){}
-
-
-Command::~Command(){}
-
 
 Task::Task(const int id, const char* text, State* state): 
     mId(id), mText(text), mState(state)
