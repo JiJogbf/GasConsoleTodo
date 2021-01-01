@@ -6,7 +6,6 @@
 #include "gas\states\NewState.hpp"
 
 #include <iostream>
-#include <vector>
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -14,8 +13,6 @@
 #include <memory>
 
 // @todo: #2 move all classes to separated moduile's
-
-using Commands = std::vector<std::shared_ptr<Command>>;
 
 class Task: public Drawable{
     int mId;
