@@ -49,6 +49,7 @@ void TaskList::delay(int id){
 void TaskList::load(const char* filename){
     mLastId = 0;
     std::ifstream stream(filename);
+    std::getline(stream, mName);
     while(!stream.eof()){
         int id = mLastId++;
         Task* t = new Task(id, "", new NewState(id, ""));
@@ -69,6 +70,7 @@ void TaskList::load(const char* filename){
 
 void TaskList::save(const char* filename){
     std::ofstream stream(filename);
+    stream << mName << std::endl;
     for(auto it = mItems.begin(); it != mItems.end(); ++it){
         it->second->save(stream);
     }

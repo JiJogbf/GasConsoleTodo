@@ -3,4 +3,4 @@ development log
 [ ] #1 create functions for simple nullptr checking and comparing pointers.
 [ ] #3 adding sorting for task list by state
 [ ] #4 load/write for list name at top of file todo.txt
-
+[ ] #5 adding fileexistance checking
