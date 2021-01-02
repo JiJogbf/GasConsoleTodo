@@ -8,7 +8,7 @@ protected:
 public:
     TaskListDecorator(TaskList* origin);
     virtual ~TaskListDecorator();
-    int newTask(const char* text);
+    int newTask(const char* text) override;
     void done(int id) override;
     void draw() override;
     void renew(int id) override;

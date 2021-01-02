@@ -1,16 +1,43 @@
 #include "gas\TaskList.hpp"
 #include "gas\DefaultTaskList.hpp"
 #include "gas\SafeTaskList.hpp"
-
+#include "gas\ObservableTaskList.hpp"
+ 
 #include <iostream>
 #include <string>
+
+class LoggingObs: public Observer{
+public:
+    LoggingObs(){
+        std::cout << "list creating" << std::endl;
+    }
+    
+    ~LoggingObs() override {
+        std::cout << "list destroying" << std::endl;
+    }
+    
+    void onAction(TaskList* list, int id) override {
+        std::cout << "perorming action with task id = "<< id << std::endl;
+    }
+
+    void onUpdate(TaskList* list) override {
+        std::cout << "list performed content update" << std::endl;
+    }
+};
 
 int main(int argc, char** argv){
     if(argc > 1){
         std::string action = argv[1];
         if(argc > 2){
             std::string param = argv[2];
-            TaskList* list = new SafeTaskList(new DefaultTaskList("todo-list"));    
+            ObservableTaskList* obsList = new ObservableTaskList(
+                    new SafeTaskList(
+                        new DefaultTaskList("todo-list")
+                    )
+                );
+            obsList->attach(new LoggingObs());
+            TaskList* list = obsList;
+
             list->load("todo.txt");
             if(action == "new"){
                 list->newTask(param.c_str());
