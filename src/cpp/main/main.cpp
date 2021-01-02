@@ -10,8 +10,7 @@ int main(int argc, char** argv){
         std::string action = argv[1];
         if(argc > 2){
             std::string param = argv[2];
-            // @todo: #4 load/write for list name at top of file todo.txt
-            TaskList* list = new SafeTaskList(new DefaultTaskList("todo-list"));  
+            TaskList* list = new SafeTaskList(new DefaultTaskList("todo-list"));    
             list->load("todo.txt");
             if(action == "new"){
                 list->newTask(param.c_str());
