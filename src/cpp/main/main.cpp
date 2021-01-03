@@ -7,6 +7,14 @@
 #include <iostream>
 #include <string>
 
+void printUsage(const char* text){
+    std::cout << text << std::endl 
+        << "usage: todo <action> [parameter]" << std::endl    
+        << "commands: " << std::endl
+        << "new" << std::endl
+        << "done" << std::endl;
+}
+
 int main(int argc, char** argv){
     if(argc > 1){
         std::string action = argv[1];
@@ -38,18 +46,10 @@ int main(int argc, char** argv){
             list->save("todo.txt");            
             delete list;
         }else{
-            std::cout << "Not enough params" << std::endl 
-                << "usage: todo <action> [parameter]" << std::endl    
-                << "commands: " << std::endl
-                << "new" << std::endl
-                << "done" << std::endl;
+            printUsage("No action passed");
         }
     }else{
-        std::cout << "No action passed" << std::endl 
-            << "usage: todo <action> [parameter]" << std::endl    
-            << "commands: " << std::endl
-            << "new" << std::endl
-            << "done" << std::endl;
+        printUsage("No action passed");
     }
     return 0;
 }
