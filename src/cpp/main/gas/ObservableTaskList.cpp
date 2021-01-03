@@ -1,7 +1,5 @@
 #include "ObservableTaskList.hpp"
 
-Observer::~Observer(){}
-
 ObservableTaskList::ObservableTaskList(TaskList* list):
     TaskListDecorator(list), mObservers()
 {}

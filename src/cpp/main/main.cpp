@@ -2,28 +2,10 @@
 #include "gas\DefaultTaskList.hpp"
 #include "gas\SafeTaskList.hpp"
 #include "gas\ObservableTaskList.hpp"
- 
+#include "gas\LoggingObs.hpp"
+
 #include <iostream>
 #include <string>
-
-class LoggingObs: public Observer{
-public:
-    LoggingObs(){
-        std::cout << "list creating" << std::endl;
-    }
-    
-    ~LoggingObs() override {
-        std::cout << "list destroying" << std::endl;
-    }
-    
-    void onAction(TaskList* list, int id) override {
-        std::cout << "perorming action with task id = "<< id << std::endl;
-    }
-
-    void onUpdate(TaskList* list) override {
-        std::cout << "list performed content update" << std::endl;
-    }
-};
 
 int main(int argc, char** argv){
     if(argc > 1){

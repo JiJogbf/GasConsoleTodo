@@ -1,17 +1,11 @@
 #pragma once
 
 #include "TaskListDecorator.hpp"
+#include "Task.hpp"
+#include "Observer.hpp"
 
 #include <list>
 #include <memory>
-
-#include "Task.hpp"
-
-struct Observer{
-    virtual ~Observer() = 0;
-    virtual void onAction(TaskList* list, int id) = 0;
-    virtual void onUpdate(TaskList* list) = 0;
-};
 
 class ObservableTaskList: public TaskListDecorator{
 private:
