@@ -3,7 +3,6 @@
 #include "gas\SafeTaskList.hpp"
 #include "gas\ObservableTaskList.hpp"
 #include "gas\LoggingObs.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <string>

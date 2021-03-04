@@ -1,3 +1,5 @@
 #include "Command.hpp"
 
-Command::~Command(){}
+namespace gas{
+    command::~command(){}
+}
