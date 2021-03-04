@@ -40,6 +40,8 @@ int main(int argc, char** argv){
             }else if(action == "delay"){
                 int id = std::stoi(param);
                 list->delay(id);            
+            }else if(action == "list"){
+                
             }else{
                 std::cout << "unrecognized action: '" << action << "'" << std::endl;
             }
