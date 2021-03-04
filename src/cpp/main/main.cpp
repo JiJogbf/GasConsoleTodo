@@ -11,8 +11,12 @@ void printUsage(const char* text){
     std::cout << text << std::endl 
         << "usage: todo <action> [parameter]" << std::endl    
         << "commands: " << std::endl
+        << "help" << std::endl
         << "new" << std::endl
-        << "done" << std::endl;
+        << "done" << std::endl
+        << "renew" << std::endl
+        << "delay" << std::endl
+        << "list" << std::endl;
 }
 
 int main(int argc, char** argv){
@@ -29,7 +33,13 @@ int main(int argc, char** argv){
             TaskList* list = obsList;
 
             list->load("todo.txt");
-            if(action == "new"){
+            if(action == "help"){
+                // @todo: сделать так чтобы эта команда спрашивала 
+                // у самого списка имена доступных команд. Так же было 
+                // бы круто чтобы каждая команда возвращала собственное 
+                // описание, что она делает.
+                printUsage("Available commands");
+            }else if(action == "new"){
                 list->newTask(param.c_str());
             }else if(action == "done"){
                 int id = std::stoi(param);
