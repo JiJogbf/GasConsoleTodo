@@ -21,7 +21,7 @@ void display_file(const char* filename){
     stream.close();
 }
 
-void printUsage(const char* text){
+void print_usage(const char* text){
     std::cout << text << std::endl 
         << "usage: todo <action> [parameter]" << std::endl    
         << "commands: " << std::endl
@@ -41,7 +41,7 @@ int main(int argc, char** argv){
             // у самого списка имена доступных команд. Так же было 
             // бы круто чтобы каждая команда возвращала собственное 
             // описание, что она делает.
-            printUsage("Available commands");
+            print_usage("Available commands");
         }else if(action == "list"){
             display_file("todo.txt");
         }else if(argc > 2){
@@ -71,10 +71,10 @@ int main(int argc, char** argv){
             list->save("todo.txt");            
             delete list;
         }else{
-            printUsage("No action passed");
+            print_usage("No action passed");
         }
     }else{
-        printUsage("No action passed");
+        print_usage("No action passed");
     }
     return 0;
 }
