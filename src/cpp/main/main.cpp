@@ -5,7 +5,21 @@
 #include "gas\LoggingObs.hpp"
 
 #include <iostream>
+#include <fstream>
 #include <string>
+
+void display_file(const char* filename){
+    // задачи из todo.txt выдать кратким списком 
+    // на консоль. по сути можно просто прочитать todo.txt
+    // и выдать его на консоль
+    std::ifstream stream(filename);
+    while(!stream.eof()){
+        std::string s;
+        std::getline(stream, s);
+        std::cout << s << std::endl;
+    }
+    stream.close();
+}
 
 void printUsage(const char* text){
     std::cout << text << std::endl 
@@ -22,7 +36,15 @@ void printUsage(const char* text){
 int main(int argc, char** argv){
     if(argc > 1){
         std::string action = argv[1];
-        if(argc > 2){
+        if(action == "help"){
+            // @todo: сделать так чтобы эта команда спрашивала 
+            // у самого списка имена доступных команд. Так же было 
+            // бы круто чтобы каждая команда возвращала собственное 
+            // описание, что она делает.
+            printUsage("Available commands");
+        }else if(action == "list"){
+            display_file("todo.txt");
+        }else if(argc > 2){
             std::string param = argv[2];
             ObservableTaskList* obsList = new ObservableTaskList(
                     new SafeTaskList(
@@ -31,15 +53,8 @@ int main(int argc, char** argv){
                 );
             obsList->attach(new LoggingObs());
             TaskList* list = obsList;
-
             list->load("todo.txt");
-            if(action == "help"){
-                // @todo: сделать так чтобы эта команда спрашивала 
-                // у самого списка имена доступных команд. Так же было 
-                // бы круто чтобы каждая команда возвращала собственное 
-                // описание, что она делает.
-                printUsage("Available commands");
-            }else if(action == "new"){
+            if(action == "new"){
                 list->newTask(param.c_str());
             }else if(action == "done"){
                 int id = std::stoi(param);
@@ -50,8 +65,6 @@ int main(int argc, char** argv){
             }else if(action == "delay"){
                 int id = std::stoi(param);
                 list->delay(id);            
-            }else if(action == "list"){
-                
             }else{
                 std::cout << "unrecognized action: '" << action << "'" << std::endl;
             }
