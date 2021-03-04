@@ -7,6 +7,10 @@ For now this tool compiling only on Windows. If you kind people and wana help, f
 ## How to build
 In current master branch i used mingw and cmake. 
 
+### Using MinGW 
+calling cmake . -G "MinGW Makefile", then call mingw32-make to
+build this app. After build will be created todo binnary. 
+
 # Steps 
 1. Install mingw
 2. install cmake
