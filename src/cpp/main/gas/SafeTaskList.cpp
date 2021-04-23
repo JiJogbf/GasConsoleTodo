@@ -10,6 +10,8 @@ static bool fileExists(const char* filename){
 SafeTaskList::SafeTaskList(TaskList* list): TaskListDecorator(list){}
 
 void SafeTaskList::load(const char* filename){
+    // @todo: if file not exists
+    // we simple create empty document
     if(fileExists(filename)){
         TaskListDecorator::load(filename);
     } 
