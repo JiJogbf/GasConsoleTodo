@@ -1,8 +1,8 @@
 #pragma once
 
 namespace gas{
-    struct command{
-        virtual ~command() = 0;
+    struct Command{
+        virtual ~Command() = 0;
         virtual void execute() = 0;
     };
 }

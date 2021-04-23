@@ -5,12 +5,12 @@
 #include "command.hpp"
 
 namespace gas{
-    class help_command: public command{
+    class HelpCommand: public Command{
     private:
         TaskList* list;
     public:
-        help_command(TaskList* list);
-        ~help_command();
+        HelpCommand(TaskList* list);
+        ~HelpCommand();
         void execute() override;
     };
 }

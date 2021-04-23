@@ -4,13 +4,13 @@
 
 namespace gas{
 
-help_command::help_command(TaskList* list): list(list){}
+HelpCommand::HelpCommand(TaskList* list): list(list){}
 
-help_command::~help_command(){
+HelpCommand::~HelpCommand(){
     list = nullptr;
 }
 
-void help_command::execute(){
+void HelpCommand::execute(){
     std::cout << "commands: " << std::endl
         << "help" << std::endl
         << "new" << std::endl
