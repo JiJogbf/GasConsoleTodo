@@ -1,4 +1,4 @@
-#include "help_command.hpp"
+#include "HelpCommand.hpp"
 
 #include <iostream>
 
